@@ -1,0 +1,20 @@
+#!/bin/sh
+# /etc/init.d/rcS - startup script run by init (see /etc/inittab)
+
+# Virtual filesystems
+mount -t proc     proc     /proc
+mount -t sysfs    sysfs    /sys
+mount -t tmpfs    tmpfs    /tmp
+# /dev: auto-mounted if the kernel has CONFIG_DEVTMPFS_MOUNT=y, otherwise mount it here
+grep -q " /dev " /proc/mounts || mount -t devtmpfs devtmpfs /dev
+
+# Hostname (shown in the shell prompt and by `hostname`)
+[ -f /etc/hostname ] && hostname -F /etc/hostname
+
+# Start the application automatically, in the foreground:
+# init waits for this script, so the shell prompt only appears once the app has finished.
+echo
+echo "*** System booted - starting threads_app ***"
+/usr/bin/threads_app
+echo "*** threads_app finished ***"
+echo

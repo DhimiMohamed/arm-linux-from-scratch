@@ -1,0 +1,12 @@
+# /etc/inittab - BusyBox init configuration
+# format:  <tty>:<runlevel(ignored)>:<action>:<command>
+
+# 1. Run the startup script once at boot (init waits for it to finish)
+::sysinit:/etc/init.d/rcS
+
+# 2. Then offer a shell on the console ("Please press Enter to activate this console")
+::askfirst:-/bin/sh
+
+# 3. What to do on Ctrl-Alt-Del and at shutdown
+::ctrlaltdel:/sbin/reboot
+::shutdown:/bin/umount -a -r

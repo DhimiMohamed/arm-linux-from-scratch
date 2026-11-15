@@ -1,0 +1,4 @@
+# Always store and check out text files with LF (Linux) line endings:
+# shell scripts like files/rcS and files/env.sh break with Windows CRLF.
+* text=auto eol=lf
+*.png binary

@@ -1,0 +1,16 @@
+# Build outputs (share via GitHub Releases, not git)
+output/
+*.img
+zImage
+*.dtb
+
+# Downloaded sources / build trees
+*.tar.*
+busybox-*/
+linux-*/
+rootfs/
+
+# Compiled binaries
+threads_app
+threads_app_x86
+*.o
