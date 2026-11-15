@@ -78,7 +78,12 @@ Press **Enter** to get a shell, then explore:
 / # mount                    # what rcS mounted
 / # ps                       # init is PID 1
 / # poweroff                 # clean shutdown (or Ctrl-A then X to quit QEMU)
+/ # dmesg | tail             # the full kernel log, including messages hidden from the console
 ```
+
+> **Kernel messages in the middle of your output?** Lines like `deferred probe pending` or `drm-clcd-pl111 ...`
+> are harmless: about 10 s after boot, the kernel reports drivers still waiting for hardware we don't use (LCD,
+> watchdog). `rcS` runs `dmesg -n 1` so they stay off the console; they are still in `dmesg`.
 
 ## 7.4 Screenshot (for the README)
 
@@ -129,5 +134,6 @@ The **last message** you see tells you which stage failed:
 | 8 | `/bin/sh: threads_app: not found` (the file exists!) | **Missing dynamic loader** `/lib/ld-linux.so.3` (Step 4.3) |
 | 8 | `error while loading shared libraries: libc.so.6` | libc not copied (Step 4.3) |
 | 8 | Strange `syntax error` or `can't execute` when running the app | The app was compiled for x86 → use `arm-linux-gnueabi-gcc` (Step 2.3) |
+| 8 | Kernel lines (`deferred probe pending`...) mixed with the app output | Harmless driver messages → `dmesg -n 1` in `rcS` keeps them off the console |
 | 9 | The prompt never appears | The app never ends, and init waits for `rcS` (Step 4.4) |
 | any | Your changes don't show up | You edited `rootfs/` but didn't rebuild `arm.img` (Step 5.1) |

@@ -11,6 +11,10 @@ grep -q " /dev " /proc/mounts || mount -t devtmpfs devtmpfs /dev
 # Hostname (shown in the shell prompt and by `hostname`)
 [ -f /etc/hostname ] && hostname -F /etc/hostname
 
+# Keep the console readable: from now on the kernel prints only critical messages there.
+# Nothing is lost: the full kernel log is still available with `dmesg`.
+dmesg -n 1
+
 # Start the application automatically, in the foreground:
 # init waits for this script, so the shell prompt only appears once the app has finished.
 echo

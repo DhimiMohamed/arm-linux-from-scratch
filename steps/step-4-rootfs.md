@@ -93,6 +93,7 @@ How the boot reaches your app:
    ├─ ::sysinit:/etc/init.d/rcS          runs once; init WAITS for it to finish
    │     ├─ mount proc, sysfs, tmpfs (and devtmpfs if needed)
    │     ├─ hostname -F /etc/hostname
+   │     ├─ dmesg -n 1                   kernel prints only critical messages on the console
    │     └─ /usr/bin/threads_app         runs in the foreground until both threads end
    │
    ├─ ::askfirst:-/bin/sh                then: "Please press Enter to activate this console"
